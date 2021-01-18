@@ -20,7 +20,9 @@ function handleSubmit(event) {
 function displayItems() {
     const html = items.map(
         item => `<li class="shopping-item">
-        ${item.name}
+        <input type="checkbox">
+        <span class="itemName">${item.name}</span>
+        <button area-label="Remove ${item.name}">&times;</button>
         </li>`
     )
     .join('');
