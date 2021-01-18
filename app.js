@@ -14,6 +14,17 @@ function handleSubmit(event) {
     items.push(item);
     console.log(`There are now ${items.length} items in your state`);
     event.target.reset();
+    displayItems(item)
+}
+
+function displayItems() {
+    const html = items.map(
+        item => `<li class="shopping-item">
+        ${item.name}
+        </li>`
+    )
+    .join('');
+    list.innerHTML = html;
 }
 
 shoppingForm.addEventListener('submit', handleSubmit);
