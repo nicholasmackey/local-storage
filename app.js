@@ -1,7 +1,7 @@
 const shoppingForm = document.querySelector('.shopping');
 const list = document.querySelector('.list');
 
-const items = [];
+let items = [];
 
 function handleSubmit(event) {
     event.preventDefault(); 
@@ -12,7 +12,6 @@ function handleSubmit(event) {
         complete: false,
     };
     items.push(item);
-    console.log(`There are now ${items.length} items in your state`);
     event.target.reset();
     list.dispatchEvent(new CustomEvent('itemsUpdated'));
 }
@@ -47,16 +46,17 @@ function restoreFromLocalStorage() {
 }
 
 function deleteItem(id) {
-    console.log('**TODO** deleting item.', id)
+    items = newItems = items.filter(item => item.id !== id);
+    list.dispatchEvent(new CustomEvent('itemsUpdated'));
 }
 
 shoppingForm.addEventListener('submit', handleSubmit);
 list.addEventListener('itemsUpdated', displayItems);
 list.addEventListener('itemsUpdated', mirrorToLocalStorage);
-// Event Delegation: We listen for the clock on the list <ul> but then delegate the click over to the button if that is what was clicked.
+// Event Delegation: We listen for the click on the list <ul> but then delegate the click over to the button if that is what was clicked.
 list.addEventListener('click', function(e) {
     if (e.target.matches('button')) {
-        deleteItem(e.target.value);
+        deleteItem(parseInt(e.target.value));
     }
 });
 restoreFromLocalStorage();
