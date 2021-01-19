@@ -21,8 +21,13 @@ function displayItems() {
     const html = items.map(
         item => `<li class="shopping-item">
         <input type="checkbox">
-        <span class="itemName">${item.name}</span>
-        <button area-label="Remove ${item.name}">&times;</button>
+        <span class="itemName">
+        ${item.name}
+        </span>
+        <button 
+            aria-label="Remove ${item.name}"
+            value="${item.id}"
+            >&times;</button>
         </li>`
     )
     .join('');
@@ -42,7 +47,7 @@ function restoreFromLocalStorage() {
 }
 
 function deleteItem(id) {
-    console.log('**TODO** deleting item.')
+    console.log('**TODO** deleting item.', id)
 }
 
 shoppingForm.addEventListener('submit', handleSubmit);
@@ -51,7 +56,7 @@ list.addEventListener('itemsUpdated', mirrorToLocalStorage);
 // Event Delegation: We listen for the clock on the list <ul> but then delegate the click over to the button if that is what was clicked.
 list.addEventListener('click', function(e) {
     if (e.target.matches('button')) {
-        deleteItem();
+        deleteItem(e.target.value);
     }
 });
 restoreFromLocalStorage();
