@@ -14,7 +14,8 @@ function handleSubmit(event) {
     items.push(item);
     console.log(`There are now ${items.length} items in your state`);
     event.target.reset();
-    displayItems(item)
+    // displayItems(item)
+    list.dispatchEvent(new CustomEvent('itemsUpdated'));
 }
 
 function displayItems() {
@@ -30,3 +31,4 @@ function displayItems() {
 }
 
 shoppingForm.addEventListener('submit', handleSubmit);
+list.addEventListener('itemsUpdated', displayItems);
