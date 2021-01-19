@@ -14,7 +14,6 @@ function handleSubmit(event) {
     items.push(item);
     console.log(`There are now ${items.length} items in your state`);
     event.target.reset();
-    // displayItems(item)
     list.dispatchEvent(new CustomEvent('itemsUpdated'));
 }
 
@@ -42,8 +41,17 @@ function restoreFromLocalStorage() {
     }
 }
 
+function deleteItem(id) {
+    console.log('**TODO** deleting item.')
+}
+
 shoppingForm.addEventListener('submit', handleSubmit);
 list.addEventListener('itemsUpdated', displayItems);
 list.addEventListener('itemsUpdated', mirrorToLocalStorage);
-
+// Event Delegation: We listen for the clock on the list <ul> but then delegate the click over to the button if that is what was clicked.
+list.addEventListener('click', function(e) {
+    if (e.target.matches('button')) {
+        deleteItem();
+    }
+});
 restoreFromLocalStorage();
